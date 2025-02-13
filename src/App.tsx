@@ -1,4 +1,5 @@
 import Header from "./components/HeaderMain";
+import KanbanBoardSelection from "./components/sections/Board";
 
 function App() {
   return (
@@ -6,6 +7,7 @@ function App() {
       <Header />
       {/* Add your main application components here */}
       {/* ... */}
+      <KanbanBoardSelection />
     </div>
   );
 }

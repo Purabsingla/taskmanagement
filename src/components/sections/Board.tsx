@@ -1,93 +1,82 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const initialBoards = [
-  {
-    id: uuidv4(),
-    title: "To Do",
-    tasks: [{ id: uuidv4(), content: "Task 1" }],
-  },
-  {
-    id: uuidv4(),
-    title: "In Progress",
-    tasks: [{ id: uuidv4(), content: "Task 2" }],
-  },
-  {
-    id: uuidv4(),
-    title: "Done",
-    tasks: [{ id: uuidv4(), content: "Task 3" }],
-  },
+  { id: uuidv4(), title: "College Work" },
+  { id: uuidv4(), title: "Home Work" },
+  { id: uuidv4(), title: "Personal" },
+  { id: uuidv4(), title: "Work Tasks" },
+  { id: uuidv4(), title: "Hobby Projects" },
 ];
 
-const KanbanBoard: React.FC = () => {
+const KanbanBoardSelection: React.FC = () => {
   const [boards, setBoards] = useState(initialBoards);
 
-  const onDragEnd = (result: any) => {
-    const { source, destination } = result;
-    if (!destination) return;
-
-    const sourceBoardIndex = boards.findIndex(
-      (b) => b.id === source.droppableId
-    );
-    const destinationBoardIndex = boards.findIndex(
-      (b) => b.id === destination.droppableId
-    );
-
-    const sourceBoard = boards[sourceBoardIndex];
-    const destinationBoard = boards[destinationBoardIndex];
-
-    const sourceTasks = [...sourceBoard.tasks];
-    const destinationTasks = [...destinationBoard.tasks];
-
-    const [movedTask] = sourceTasks.splice(source.index, 1);
-    destinationTasks.splice(destination.index, 0, movedTask);
-
-    const newBoards = [...boards];
-    newBoards[sourceBoardIndex] = { ...sourceBoard, tasks: sourceTasks };
-    newBoards[destinationBoardIndex] = {
-      ...destinationBoard,
-      tasks: destinationTasks,
-    };
-
-    setBoards(newBoards);
-  };
-
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-4 p-4">
-        {boards.map((board) => (
-          <Droppable key={board.id} droppableId={board.id}>
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="w-64 bg-gray-100 p-4 rounded-lg shadow"
-              >
-                <h2 className="text-lg font-bold mb-2">{board.title}</h2>
-                {board.tasks.map((task, index) => (
-                  <Draggable key={task.id} draggableId={task.id} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="p-2 bg-white rounded shadow mb-2"
-                      >
-                        {task.content}
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
+    <div className="mt-48 relative flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-blue-400 to-emerald-400">
+      {/* Top SVG */}
+      <div className="absolute -top-[21rem] left-0 w-full">
+        <svg viewBox="0 0 1440 320" className="w-full">
+          <defs>
+            <linearGradient id="svgGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#60a5fa" />
+              <stop offset="100%" stopColor="#34d399" />
+            </linearGradient>
+          </defs>
+          <path
+            fill="url(#svgGradient)"
+            fillOpacity="1"
+            d="M0,128L48,128C96,128,192,128,288,144C384,160,480,192,576,197.3C672,203,768,181,864,170.7C960,160,1056,160,1152,170.7C1248,181,1344,203,1392,213.3L1440,224L1440,320L0,320Z"
+          ></path>
+        </svg>
       </div>
-    </DragDropContext>
+
+      <h1 className="text-4xl font-extrabold text-white mb-8 drop-shadow-lg z-10">
+        Select Your Board to Manage
+      </h1>
+      <div className="flex flex-wrap justify-center gap-10 w-full max-w-5xl min-h-[60vh] z-10">
+        {boards.slice(0, 5).map((board) => (
+          <button
+            key={board.id}
+            className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105"
+          >
+            📌 {board.title}
+          </button>
+        ))}
+        <button className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105">
+          ➕ Add New Board
+        </button>
+      </div>
+      {boards.length > 6 && (
+        <button className="mt-8 px-8 py-4 bg-white bg-opacity-20 backdrop-blur-lg text-white rounded-xl shadow-lg hover:bg-opacity-30 text-lg font-semibold transform hover:scale-105 transition-all z-10">
+          Show More Boards
+        </button>
+      )}
+
+      {/* Bottom SVG (Reversed) */}
+      <div className="absolute -bottom-[21rem] left-0 w-full transform rotate-180">
+        <svg viewBox="0 0 1440 320" className="w-full">
+          <defs>
+            <linearGradient
+              id="svgGradientReversed"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" stopColor="#34d399" />
+              <stop offset="100%" stopColor="#60a5fa" />
+            </linearGradient>
+          </defs>
+          <path
+            fill="url(#svgGradientReversed)"
+            fillOpacity="1"
+            d="M0,128L48,128C96,128,192,128,288,144C384,160,480,192,576,197.3C672,203,768,181,864,170.7C960,160,1056,160,1152,170.7C1248,181,1344,203,1392,213.3L1440,224L1440,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+    </div>
   );
 };
 
-export default KanbanBoard;
+export default KanbanBoardSelection;

@@ -41,9 +41,9 @@ export function FeaturesSectionDemo() {
     },
   ];
   return (
-    <div className="relative z-20 py-10 lg:py-40 max-w-7xl mx-auto bg-black">
+    <div className="relative z-20 py-10 lg:py-40 max-w-7xl mx-auto bg-black mt-10">
       <div className="px-8">
-        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
+        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-amber-600">
           Packed with thousands of features
         </h4>
 
@@ -228,7 +228,7 @@ export const SkeletonTwo = () => {
 export const SkeletonFour = () => {
   return (
     <div className="h-60 md:h-60  flex flex-col items-center relative bg-transparent dark:bg-transparent mt-10">
-      <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
+      {/* <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" /> */}
     </div>
   );
 };

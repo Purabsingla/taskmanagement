@@ -10,32 +10,32 @@ import { IconBrandYoutubeFilled } from "@tabler/icons-react";
 export function FeaturesSectionDemo() {
   const features = [
     {
-      title: "Track issues effectively",
+      title: "Drag & Drop Task Management",
       description:
-        "Track and manage your project issues with ease using our intuitive interface.",
+        "Allows users to drag and drop tasks between different columns (e.g., To-Do, In Progress, Done). This enhances workflow by making task updates quick and intuitive.",
       skeleton: <SkeletonOne />,
       className:
         "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
     },
     {
-      title: "Capture pictures with AI",
+      title: "Task Due Date & Reminders",
       description:
-        "Capture stunning photos effortlessly using our advanced AI technology.",
+        "Displays a due date for each task and sends reminders when deadlines are close or missed. Helps users stay on track with their work.",
       skeleton: <SkeletonTwo />,
       className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
     },
     {
-      title: "Watch our AI on YouTube",
+      title: "Collaboration & User Roles",
       description:
-        "Whether its you or Tyler Durden, you can get to know about our product on YouTube",
+        "Enables team collaboration, where users can assign tasks, track changes, and comment on tasks in real-time. Helps teams work together seamlessly.",
       skeleton: <SkeletonThree />,
       className:
         "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
     },
     {
-      title: "Deploy in seconds",
+      title: "Dark Mode & Custom Themes ",
       description:
-        "With our blazing fast, state of the art, cutting edge, we are so back cloud servies (read AWS) - you can deploy your model in seconds.",
+        "Allows users to switch between light and dark mode for a personalized experience. Helps with eye comfort and custom branding.",
       skeleton: <SkeletonFour />,
       className: "col-span-1 lg:col-span-3 border-b lg:border-none",
     },

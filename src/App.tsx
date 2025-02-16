@@ -9,7 +9,9 @@ function App() {
       {/* Add your main application components here */}
       {/* ... */}
       <KanbanBoardSelection />
-      <FeaturesSectionDemo />
+      <div className="-z-50 ">
+        <FeaturesSectionDemo />
+      </div>
     </div>
   );
 }

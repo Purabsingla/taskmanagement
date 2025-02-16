@@ -13,7 +13,7 @@ const KanbanBoardSelection: React.FC = () => {
   const [boards, setBoards] = useState(initialBoards);
 
   return (
-    <div className="mt-48 relative flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-blue-400 to-emerald-400">
+    <div className="mt-48 relative flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-blue-400 to-emerald-400 z-30">
       {/* Top SVG */}
       <div className="absolute -top-[21rem] left-0 w-full">
         <svg viewBox="0 0 1440 320" className="w-full">

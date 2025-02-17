@@ -1,6 +1,7 @@
 import Header from "./components/HeaderMain";
 import KanbanBoardSelection from "./components/sections/Board";
 import { FeaturesSectionDemo } from "./components/sections/Features";
+import Footer from "./components/sections/footer";
 import TestimonialSlider from "./components/sections/Testimonials";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <FeaturesSectionDemo />
       </div>
       <TestimonialSlider />
+      <Footer />
     </div>
   );
 }

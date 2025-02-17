@@ -1,6 +1,7 @@
 import Header from "./components/HeaderMain";
 import KanbanBoardSelection from "./components/sections/Board";
 import { FeaturesSectionDemo } from "./components/sections/Features";
+import TestimonialSlider from "./components/sections/Testimonials";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <div className="-z-50 ">
         <FeaturesSectionDemo />
       </div>
+      <TestimonialSlider />
     </div>
   );
 }

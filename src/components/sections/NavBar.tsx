@@ -6,7 +6,7 @@ const NavBar: React.FC = () => {
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12">
-            <a className="block text-teal-600" href="#some">
+            <a className="block text-teal-600" href="#homeishere">
               <span className="sr-only">Home</span>
               <svg
                 className="h-8"
@@ -91,7 +91,9 @@ const NavBar: React.FC = () => {
           <div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
               <a
-                className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm"
+                className="rounded-md bg-red-500 px-5 py-2.5 text-sm font-medium text-white shadow-sm 
+               transition-all duration-300 ease-in-out transform 
+               hover:bg-red-400 hover:scale-105 hover:shadow-md active:scale-95"
                 href="#some"
               >
                 Login
@@ -99,7 +101,9 @@ const NavBar: React.FC = () => {
 
               <div className="hidden sm:flex">
                 <a
-                  className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
+                  className="rounded-md bg-transparent border border-red-500 px-5 py-2.5 text-sm font-medium text-red-500 
+                 transition-all duration-300 ease-in-out transform 
+                 hover:bg-red-500 hover:text-white hover:shadow-md active:scale-9"
                   href="#some"
                 >
                   Register

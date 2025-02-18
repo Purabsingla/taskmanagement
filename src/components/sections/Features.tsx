@@ -23,47 +23,46 @@ export function FeaturesSectionDemo() {
       description:
         "Allows users to drag and drop tasks between different columns (e.g., To-Do, In Progress, Done). This enhances workflow by making task updates quick and intuitive.",
       skeleton: <SkeletonOne />,
-      className:
-        "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
+      className: "col-span-1 lg:col-span-4 border-b lg:border-r border-black",
     },
     {
       title: "Task Due Date & Reminders",
       description:
         "Displays a due date for each task and sends reminders when deadlines are close or missed. Helps users stay on track with their work.",
       skeleton: <SkeletonTwo />,
-      className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
+      className: "border-b col-span-1 lg:col-span-2 border-black",
     },
     {
       title: "Collaboration & User Roles",
       description:
         "Enables team collaboration, where users can assign tasks, track changes, and comment on tasks in real-time. Helps teams work together seamlessly.",
       skeleton: <SkeletonThree />,
-      className:
-        "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
+      className: "col-span-1 lg:col-span-3 lg:border-r  border-black",
     },
     {
       title: "Dark Mode & Custom Themes ",
       description:
         "Allows users to switch between light and dark mode for a personalized experience. Helps with eye comfort and custom branding.",
       skeleton: <SkeletonFour />,
-      className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+      className:
+        "col-span-1 lg:col-span-3 border-b lg:border-none border-black",
     },
   ];
   return (
     <div className="relative z-20 py-10 lg:py-40 max-w-7xl mx-auto mt-[6.2rem]">
       <div className="px-8">
-        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-amber-600">
+        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-red-600 ">
           Packed with thousands of features
         </h4>
 
-        <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-black text-center font-normal ">
+        <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-gray-800 text-center font-normal ">
           From Image generation to video generation, Everything AI has APIs for
           literally everything. It can even create this website copy for you.
         </p>
       </div>
 
       <div className="relative ">
-        <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border rounded-md dark:border-neutral-800">
+        <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border rounded-md border-black">
           {features.map((feature) => (
             <FeatureCard key={feature.title} className={feature.className}>
               <FeatureTitle>{feature.title}</FeatureTitle>

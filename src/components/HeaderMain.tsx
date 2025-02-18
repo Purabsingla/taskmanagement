@@ -3,7 +3,7 @@ import Quotes from "../assests/Quotes";
 import Dots from "../assests/Dots";
 const Header: React.FC = () => {
   return (
-    <div>
+    <div className="mt-12">
       <div className="flex items-center justify-center">
         {/* Left Section */}
         <div className="w-1/2 h-[100vh] flex justify-center items-start flex-col p-28 gap-5">
@@ -35,7 +35,7 @@ const Header: React.FC = () => {
         {/* Right Section */}
         <div className="w-1/2 h-[100vh] relative">
           <div className="absolute top-[62%] left-14">
-            <div className="absolute z-50 -top-3 -left-5">
+            <div className="absolute z-40 -top-3 -left-5">
               <Quotes />
             </div>
             <div className="bg-[#0b093b] absolute w-[20rem] h-[10rem] z-30 rounded-2xl">

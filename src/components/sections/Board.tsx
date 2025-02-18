@@ -13,14 +13,14 @@ const KanbanBoardSelection: React.FC = () => {
   const [boards, setBoards] = useState(initialBoards);
 
   return (
-    <div className="mt-48 relative flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-blue-400 to-emerald-400 z-30">
+    <div className="mt-48 relative flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-red-500 to-red-400 z-30">
       {/* Top SVG */}
       <div className="absolute -top-[21rem] left-0 w-full">
         <svg viewBox="0 0 1440 320" className="w-full">
           <defs>
             <linearGradient id="svgGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#60a5fa" />
-              <stop offset="100%" stopColor="#34d399" />
+              <stop offset="0%" stopColor="#ef4444" />
+              <stop offset="100%" stopColor="#f87171" />
             </linearGradient>
           </defs>
           <path
@@ -64,8 +64,8 @@ const KanbanBoardSelection: React.FC = () => {
               x2="100%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="#34d399" />
-              <stop offset="100%" stopColor="#60a5fa" />
+              <stop offset="0%" stopColor="#f87171" />
+              <stop offset="100%" stopColor="#ef4444" />
             </linearGradient>
           </defs>
           <path

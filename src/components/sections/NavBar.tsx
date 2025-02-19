@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const NavBar: React.FC = () => {
   return (
     <header className="bg-white fixed top-0 start-0 w-full z-50">
@@ -90,14 +90,14 @@ const NavBar: React.FC = () => {
 
           <div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
-              <a
+              <Link
+                to="/login"
                 className="rounded-md bg-red-500 px-5 py-2.5 text-sm font-medium text-white shadow-sm 
                transition-all duration-300 ease-in-out transform 
                hover:bg-red-400 hover:scale-105 hover:shadow-md active:scale-95"
-                href="#some"
               >
                 Login
-              </a>
+              </Link>
 
               <div className="hidden sm:flex">
                 <a

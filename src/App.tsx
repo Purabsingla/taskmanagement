@@ -1,25 +1,15 @@
-import Header from "./components/HeaderMain";
-import KanbanBoardSelection from "./components/sections/Board";
-import FrequentlyAskedQuestions from "./components/sections/FAQ";
-import { FeaturesSectionDemo } from "./components/sections/Features";
-import Footer from "./components/sections/footer";
-import NavBar from "./components/sections/NavBar";
-import TestimonialSlider from "./components/sections/Testimonials";
-
+import Home from "./pages/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <Header />
-      {/* Add your main application components here */}
-      {/* ... */}
-      <KanbanBoardSelection />
-      <div className="-z-50 ">
-        <FeaturesSectionDemo />
-      </div>
-      <TestimonialSlider />
-      <FrequentlyAskedQuestions />
-      <Footer />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

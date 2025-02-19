@@ -1,7 +1,28 @@
 import React from "react";
 import NavBar from "../components/sections/NavBar";
+import { Input } from "../components/ui/Input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Schema, z } from "zod";
+
+const schema = z.object({
+  email: z.string().email({ message: "Required" }),
+  password: z.string().min(8, { message: "Required" }),
+});
 
 const Login: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  const Submit = (data: z.infer<Schema>) => {
+    console.log(data);
+  };
+
   return (
     <React.Fragment>
       <NavBar />
@@ -40,18 +61,15 @@ const Login: React.FC = () => {
               </div>
 
               <div className="mt-8">
-                <form>
+                <form onSubmit={handleSubmit(Submit)}>
                   <div>
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
                       Email Address
                     </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="example@example.com"
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                    />
+                    <Input className="" type="text" {...register("email")} />
+                    {errors.email?.message && (
+                      <span>Error Message : {errors.email.message}</span>
+                    )}
                   </div>
 
                   <div className="mt-6">
@@ -66,19 +84,20 @@ const Login: React.FC = () => {
                         Forgot password?
                       </a>
                     </div>
-
-                    <input
+                    <Input
+                      className=""
                       type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Your Password"
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      {...register("password")}
                     />
                   </div>
 
                   <div className="mt-6">
-                    <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                      Sign in
+                    <button
+                      className="bg-gradient-to-br relative group/btn  block dark:bg-zinc-800 w-full text-black rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+                      type="submit"
+                    >
+                      Sign up &rarr;
+                      <BottomGradient />
                     </button>
                   </div>
                 </form>
@@ -99,6 +118,15 @@ const Login: React.FC = () => {
         </div>
       </div>
     </React.Fragment>
+  );
+};
+
+const BottomGradient = () => {
+  return (
+    <>
+      <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
+      <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
+    </>
   );
 };
 

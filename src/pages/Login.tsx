@@ -4,6 +4,7 @@ import { Input } from "../components/ui/Input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, z } from "zod";
+import LoginImage from "../assests/Images/Login_Image.jpg";
 
 const schema = z.object({
   email: z.string().email({ message: "Required" }),
@@ -31,8 +32,7 @@ const Login: React.FC = () => {
           <div
             className="hidden bg-cover lg:block lg:w-2/3"
             style={{
-              backgroundImage:
-                "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)",
+              backgroundImage: `url(${LoginImage})`,
             }}
           >
             <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">

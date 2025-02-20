@@ -18,10 +18,30 @@ const Tasks: React.FC = () => {
           </div>
         </header>
 
-        <Separator className="my-3" />
+        <Separator className="my-3 px-10" />
 
-        <section className="bg-red-500 h-[90vh]">
-          <h1>Here is card brooo</h1>
+        <section className="h-[90vh] flex flex-wrap justify-center mt-10">
+          {[1, 2, 3].map((i) => (
+            <div className="mx-10" key={i}>
+              <h1 className="border rounded-tl-xl rounded-tr-xl w-[20rem] p-4 text-xl font-bold text-center border-b-0 bg-gradient-to-r from-red-600 to-red-400">
+                To-Do Taks
+              </h1>
+              <div className="border w-[20rem] p-4 text-center h-auto">
+                <h2>-- Task --</h2>
+                <h2>-- Task --</h2>
+                <h2>-- Task --</h2>
+                <h2>-- Task --</h2>
+                <h2>-- Task --</h2>
+                <h2>-- Task --</h2>
+                <h2>-- Task --</h2>
+                <h2>-- Task --</h2>
+              </div>
+              <div className="border w-[20rem] p-4 text-center rounded-bl-xl rounded-br-xl border-t-0">
+                {" "}
+                ➕ Add New Tasks{" "}
+              </div>
+            </div>
+          ))}
         </section>
       </div>
     </React.Fragment>

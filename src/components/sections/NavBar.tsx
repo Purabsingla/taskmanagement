@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Separator } from "../ui/separator";
 const NavBar: React.FC = () => {
   return (
     <header className="bg-white fixed top-0 start-0 w-full z-50">
@@ -132,6 +133,7 @@ const NavBar: React.FC = () => {
           </div>
         </div>
       </div>
+      <Separator />
     </header>
   );
 };

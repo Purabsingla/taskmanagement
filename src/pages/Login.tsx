@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, z } from "zod";
 import LoginImage from "../assests/Images/Login_Image.jpg";
+import { Link } from "react-router-dom";
 
 const schema = z.object({
   email: z.string().email({ message: "Required" }),
@@ -96,7 +97,7 @@ const Login: React.FC = () => {
                       className="bg-gradient-to-br relative group/btn  block dark:bg-zinc-800 w-full text-black rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
                       type="submit"
                     >
-                      Sign up &rarr;
+                      Sign In &rarr;
                       <BottomGradient />
                     </button>
                   </div>
@@ -104,12 +105,12 @@ const Login: React.FC = () => {
 
                 <p className="mt-6 text-sm text-center text-gray-400">
                   Don&#x27;t have an account yet?{" "}
-                  <a
-                    href="#login"
+                  <Link
+                    to={"/signup"}
                     className="text-blue-500 focus:outline-none focus:underline hover:underline"
                   >
                     Sign up
-                  </a>
+                  </Link>
                   .
                 </p>
               </div>

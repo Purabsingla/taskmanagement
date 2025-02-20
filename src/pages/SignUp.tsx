@@ -4,6 +4,8 @@ import { Input } from "../components/ui/Input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, z } from "zod";
+import SignUpImage from "../assests/Images/SignUp_Image.jpg";
+import { Link } from "react-router-dom";
 
 const schema = z.object({
   email: z.string().email({ message: "Required" }),
@@ -84,12 +86,12 @@ const SignUp: React.FC = () => {
 
                 <p className="mt-6 text-sm text-center text-gray-400">
                   Don&#x27;t have an account yet?{" "}
-                  <a
-                    href="#SignUp"
+                  <Link
+                    to={"/login"}
                     className="text-blue-500 focus:outline-none focus:underline hover:underline"
                   >
-                    Sign up
-                  </a>
+                    Sign In
+                  </Link>
                   .
                 </p>
               </div>
@@ -99,8 +101,7 @@ const SignUp: React.FC = () => {
           <div
             className="hidden bg-cover lg:block lg:w-2/3"
             style={{
-              backgroundImage:
-                "url(https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
+              backgroundImage: `url(${SignUpImage})`,
             }}
           >
             <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">

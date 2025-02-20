@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 
 const initialBoards = [
   { id: uuidv4(), title: "College Work" },
@@ -11,6 +12,12 @@ const initialBoards = [
 
 const KanbanBoardSelection: React.FC = () => {
   const [boards, setBoards] = useState(initialBoards);
+
+  const Navigate = useNavigate();
+
+  const HandleNavigate = (Data: string) => {
+    Navigate(`/boards/${Data.split(" ").join("-")}`);
+  };
 
   return (
     <div className="mt-48 relative flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-red-500 to-red-400 z-30">
@@ -39,6 +46,7 @@ const KanbanBoardSelection: React.FC = () => {
           <button
             key={board.id}
             className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105"
+            onClick={() => HandleNavigate(board.title)}
           >
             📌 {board.title}
           </button>

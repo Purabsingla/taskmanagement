@@ -6,6 +6,7 @@
     "@hello-pangea/dnd": "^18.0.1",
     "@hookform/resolvers": "^4.1.0",
     "@radix-ui/react-accordion": "^1.2.3",
+    "@radix-ui/react-separator": "^1.1.2",
     "@tabler/icons-react": "^3.30.0",
     "@types/node": "^22.13.1",
     "@types/react": "^19.0.8",

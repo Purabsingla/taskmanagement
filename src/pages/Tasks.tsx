@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import NavBar from "../components/sections/NavBar";
 import { Separator } from "../components/ui/separator";
 import { Badge } from "../components/ui/badge";
+import Button from "../components/ui/UIButton";
 const Tasks: React.FC = () => {
   const { name } = useParams();
   return (
@@ -28,14 +29,12 @@ const Tasks: React.FC = () => {
         <Separator className="my-3 px-10" />
 
         {/* Kanban Board Section */}
-        <div className="flex justify-between items-center px-10">
+        <div className="flex justify-between items-center px-10 mt-5">
           <h2 className="text-2xl font-bold">Task Board</h2>
-          <button className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition shadow-md">
-            ➕ Add Task
-          </button>
+          <Button />
         </div>
 
-        <section className="flex justify-center mt-6 gap-6">
+        <section className="flex justify-center my-6 gap-6">
           {["To-Do", "In Progress", "Done"].map((title, i) => (
             <div key={i} className="mx-5 flex flex-col items-center">
               {/* Column Header */}
@@ -56,7 +55,7 @@ const Tasks: React.FC = () => {
                 {[1, 2, 3, 4].map((task) => (
                   <div
                     key={task}
-                    className="group bg-white p-3 rounded-lg shadow-md flex flex-col items-start gap-5 py-4 justify-start border hover:shadow-lg transition"
+                    className="group bg-white p-3 rounded-lg shadow-md flex flex-col items-start gap-5 py-4 justify-start border hover:shadow-lg transition transform hover:-translate-y-2"
                   >
                     <h1 className="text-lg font-medium group-hover:text-red-500 transition-colors">
                       Project Completion
@@ -64,7 +63,7 @@ const Tasks: React.FC = () => {
                     <p>
                       Priority :{" "}
                       <span>
-                        <Badge variant={"success"}>High</Badge>
+                        <Badge variant={"destructive"}>High</Badge>
                       </span>
                     </p>
                   </div>

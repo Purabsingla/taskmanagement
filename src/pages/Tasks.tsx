@@ -1,11 +1,58 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../components/sections/NavBar";
 import { Separator } from "../components/ui/separator";
 import { Badge } from "../components/ui/badge";
 import Button from "../components/ui/UIButton";
+import { Slider } from "../components/ui/slider";
+import { motion, AnimatePresence } from "framer-motion";
+type tasks = {
+  id: number;
+  title: string;
+  progress: number;
+  section: "To-Do" | "In Progress" | "Done";
+};
+
 const Tasks: React.FC = () => {
   const { name } = useParams();
+  const [Tasks, setTasks] = useState<tasks[]>([
+    { id: 1, title: "Project Completion", progress: 0, section: "To-Do" },
+    { id: 2, title: "Code Review", progress: 20, section: "To-Do" },
+    { id: 3, title: "Testing", progress: 50, section: "In Progress" },
+    { id: 4, title: "Deployment", progress: 100, section: "Done" },
+  ]);
+
+  const [tempValues, setTempValues] = useState<{ [key: number]: number }>({});
+  const previousCounts = useRef({} as string);
+
+  // Update progress while dragging
+  const handleSliderChange = (id: number, value: number) => {
+    setTempValues((prev) => ({ ...prev, [id]: value }));
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, progress: value } : task
+      )
+    );
+  };
+
+  // Update section only when mouse is released
+  const handleSliderRelease = (id: number) => {
+    const value = tempValues[id] || 0; // Get the latest slider value
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              section:
+                value === 100 ? "Done" : value >= 33 ? "In Progress" : "To-Do",
+            }
+          : task
+      )
+    );
+  };
+  const getTaskCount = (section: unknown) =>
+    Tasks.filter((task) => task.section === section).length;
+
   return (
     <React.Fragment>
       <NavBar />
@@ -35,42 +82,82 @@ const Tasks: React.FC = () => {
         </div>
 
         <section className="flex justify-center my-6 gap-6">
-          {["To-Do", "In Progress", "Done"].map((title, i) => (
-            <div key={i} className="mx-5 flex flex-col items-center">
-              {/* Column Header */}
-              <h1
-                className={`border rounded-t-xl w-[20rem] p-4 text-xl font-bold text-center border-b-0 text-white shadow-md ${
-                  i === 0
-                    ? "bg-gradient-to-r from-red-600 to-red-400"
-                    : i === 1
-                    ? "bg-gradient-to-r from-yellow-500 to-yellow-300"
-                    : "bg-gradient-to-r from-green-600 to-green-400"
-                }  `}
-              >
-                {title} Tasks
-              </h1>
+          {["To-Do", "In Progress", "Done"].map((title, i) => {
+            const currentCount = getTaskCount(title);
+            const prevCount = previousCounts.current[title] ?? currentCount; // Use previous count or current if first render
 
-              {/* Task Cards Container (No Scroll) */}
-              <div className="border w-[20rem] p-4 min-h-[15rem] bg-gray-100 shadow-md rounded-b-lg space-y-3">
-                {[1, 2, 3, 4].map((task) => (
-                  <div
-                    key={task}
-                    className="group bg-white p-3 rounded-lg shadow-md flex flex-col items-start gap-5 py-4 justify-start border hover:shadow-lg transition transform hover:-translate-y-2"
+            // Update the ref value after render
+            useEffect(() => {
+              previousCounts.current[title] = currentCount;
+            }, [currentCount]);
+            return (
+              <div key={i} className="mx-5 flex flex-col items-center">
+                {/* Column Header */}
+                <AnimatePresence>
+                  <h1
+                    className={`border rounded-t-xl w-[24rem] p-4 text-xl font-bold text-start border-b-0 text-white shadow-md ${
+                      i === 0
+                        ? "bg-gradient-to-r from-red-600 to-red-400"
+                        : i === 1
+                        ? "bg-gradient-to-r from-yellow-500 to-yellow-300"
+                        : "bg-gradient-to-r from-green-600 to-green-400"
+                    }`}
                   >
-                    <h1 className="text-lg font-medium group-hover:text-red-500 transition-colors">
-                      Project Completion
-                    </h1>
-                    <p>
-                      Priority :{" "}
-                      <span>
-                        <Badge variant={"destructive"}>High</Badge>
-                      </span>
-                    </p>
-                  </div>
-                ))}
+                    {title} Tasks{" "}
+                    <span className="relative inline-block w-6 h-6 overflow-hidden">
+                      <AnimatePresence mode="popLayout">
+                        <motion.span
+                          key={getTaskCount(title)}
+                          initial={{ y: 10, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          exit={{
+                            y: getTaskCount(title) > previousCount ? -10 : 10,
+                            opacity: 0,
+                          }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute w-full text-center"
+                        >
+                          ({getTaskCount(title)})
+                        </motion.span>
+                      </AnimatePresence>
+                    </span>
+                  </h1>
+                </AnimatePresence>
+
+                {/* Task Cards */}
+                <div className="w-[26rem] p-4 min-h-[16rem] rounded-b-lg space-y-3">
+                  {Tasks.filter((task) => task.section === title).map(
+                    (task) => (
+                      <div
+                        key={task.id}
+                        className="group bg-white p-3 rounded-lg hover:shadow-xl flex flex-col items-start gap-5 py-4 justify-start border transition transform hover:-translate-y-2"
+                      >
+                        <h1 className="text-lg font-medium group-hover:text-red-500 transition-colors">
+                          {task.title}
+                        </h1>
+                        <p>
+                          Priority:{" "}
+                          <span>
+                            <Badge variant="destructive">High</Badge>
+                          </span>
+                        </p>
+                        {/* Slider */}
+                        <Slider
+                          value={[task.progress]}
+                          onValueChange={(value) =>
+                            handleSliderChange(task.id, value[0])
+                          }
+                          onPointerUp={() => handleSliderRelease(task.id)} // Mouse release event
+                          className="w-full"
+                          // thumbClass="bg-blue-500" // Change slider color
+                        />
+                      </div>
+                    )
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </section>
       </div>
     </React.Fragment>

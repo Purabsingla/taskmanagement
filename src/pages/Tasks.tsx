@@ -6,6 +6,7 @@ import { Badge } from "../components/ui/badge";
 import { Slider } from "../components/ui/slider";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/sections/footer";
+import { Dialog, DialogTrigger } from "../components/ui/dialog";
 import DialogForm from "../components/sections/DialogForm";
 type tasks = {
   id: number;
@@ -22,8 +23,6 @@ const Tasks: React.FC = () => {
     { id: 3, title: "Testing", progress: 50, section: "In Progress" },
     { id: 4, title: "Deployment", progress: 100, section: "Done" },
   ]);
-
-  const [toggleButton, setToggleButton] = useState<boolean>(false);
 
   const [tempValues, setTempValues] = useState<{ [key: number]: number }>({});
   // const previousCounts = useRef({} as string);
@@ -64,6 +63,14 @@ const Tasks: React.FC = () => {
     );
   };
 
+  const handleDialogOpen = () => {
+    document.body.classList.add("dialog-open");
+  };
+
+  const handleDialogClose = () => {
+    document.body.classList.remove("dialog-open");
+  };
+
   return (
     <React.Fragment>
       <NavBar />
@@ -89,12 +96,18 @@ const Tasks: React.FC = () => {
         {/* Kanban Board Section */}
         <div className="flex justify-between items-center px-10 mt-5">
           <h2 className="text-2xl font-bold">Task Board</h2>
-          <button
-            className="btn"
-            onClick={() => setToggleButton(!toggleButton)} // 🔥 Fix: Toggle state correctly
-          >
-            Add Tasks
-          </button>
+          <aside>
+            <Dialog
+              onOpenChange={(isOpen) =>
+                isOpen ? handleDialogOpen() : handleDialogClose()
+              }
+            >
+              <DialogTrigger>
+                <button className="btn">Add Tasks</button>
+              </DialogTrigger>
+              <DialogForm />
+            </Dialog>
+          </aside>
         </div>
 
         <section className="flex justify-center my-6 gap-6">
@@ -176,7 +189,6 @@ const Tasks: React.FC = () => {
       <footer className="mt-20">
         <Footer />
       </footer>
-      {toggleButton && <DialogForm />}
     </React.Fragment>
   );
 };

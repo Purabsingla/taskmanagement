@@ -1,0 +1,7 @@
+body.dialog-open {
+  margin-right: 0 !important;
+}
+
+html {
+  overflow-y: scroll !important;
+}

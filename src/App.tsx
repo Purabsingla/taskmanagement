@@ -6,6 +6,7 @@ import Tasks from "./pages/Tasks";
 
 //Importing Css
 import "./css/Button.css";
+import "./css/style.css";
 function App() {
   return (
     <div className="App">

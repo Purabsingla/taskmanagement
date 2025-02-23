@@ -6,6 +6,7 @@ import { Badge } from "../components/ui/badge";
 import Button from "../components/ui/UIButton";
 import { Slider } from "../components/ui/slider";
 import { motion, AnimatePresence } from "framer-motion";
+import Footer from "../components/sections/footer";
 type tasks = {
   id: number;
   title: string;
@@ -23,7 +24,17 @@ const Tasks: React.FC = () => {
   ]);
 
   const [tempValues, setTempValues] = useState<{ [key: number]: number }>({});
-  const previousCounts = useRef({} as string);
+  // const previousCounts = useRef({} as string);
+  const previousCounts = useRef<Record<string, number>>({});
+
+  const getTaskCount = (section: string) =>
+    Tasks.filter((task) => task.section === section).length;
+
+  useEffect(() => {
+    ["To-Do", "In Progress", "Done"].forEach((title) => {
+      previousCounts.current[title] = getTaskCount(title); // Update previous counts
+    });
+  }, [Tasks]); // Runs whenever tasks update
 
   // Update progress while dragging
   const handleSliderChange = (id: number, value: number) => {
@@ -50,8 +61,6 @@ const Tasks: React.FC = () => {
       )
     );
   };
-  const getTaskCount = (section: unknown) =>
-    Tasks.filter((task) => task.section === section).length;
 
   return (
     <React.Fragment>
@@ -86,10 +95,6 @@ const Tasks: React.FC = () => {
             const currentCount = getTaskCount(title);
             const prevCount = previousCounts.current[title] ?? currentCount; // Use previous count or current if first render
 
-            // Update the ref value after render
-            useEffect(() => {
-              previousCounts.current[title] = currentCount;
-            }, [currentCount]);
             return (
               <div key={i} className="mx-5 flex flex-col items-center">
                 {/* Column Header */}
@@ -103,7 +108,7 @@ const Tasks: React.FC = () => {
                         : "bg-gradient-to-r from-green-600 to-green-400"
                     }`}
                   >
-                    {title} Tasks{" "}
+                    {title} Tasks (
                     <span className="relative inline-block w-6 h-6 overflow-hidden">
                       <AnimatePresence mode="popLayout">
                         <motion.span
@@ -111,16 +116,17 @@ const Tasks: React.FC = () => {
                           initial={{ y: 10, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
                           exit={{
-                            y: getTaskCount(title) > previousCount ? -10 : 10,
+                            y: getTaskCount(title) > prevCount ? -10 : 10,
                             opacity: 0,
                           }}
                           transition={{ duration: 0.3 }}
                           className="absolute w-full text-center"
                         >
-                          ({getTaskCount(title)})
+                          {getTaskCount(title)}
                         </motion.span>
                       </AnimatePresence>
                     </span>
+                    )
                   </h1>
                 </AnimatePresence>
 
@@ -159,6 +165,10 @@ const Tasks: React.FC = () => {
             );
           })}
         </section>
+
+        <footer className="mt-20">
+          <Footer />
+        </footer>
       </div>
     </React.Fragment>
   );

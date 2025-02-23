@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import NavBar from "../components/sections/NavBar";
 import { Separator } from "../components/ui/separator";
 import { Badge } from "../components/ui/badge";
-import Button from "../components/ui/UIButton";
 import { Slider } from "../components/ui/slider";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/sections/footer";
@@ -90,7 +89,12 @@ const Tasks: React.FC = () => {
         {/* Kanban Board Section */}
         <div className="flex justify-between items-center px-10 mt-5">
           <h2 className="text-2xl font-bold">Task Board</h2>
-          <Button setToggleButton={setToggleButton} />
+          <button
+            className="btn"
+            onClick={() => setToggleButton(!toggleButton)} // 🔥 Fix: Toggle state correctly
+          >
+            Add Tasks
+          </button>
         </div>
 
         <section className="flex justify-center my-6 gap-6">

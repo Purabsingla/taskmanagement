@@ -1,7 +1,19 @@
 import React from "react";
 import "../../css/Button.css";
-const Button: React.FC = () => {
-  return <button className="btn">Add Tasks</button>;
+
+interface ButtonProps {
+  setToggleButton: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Button: React.FC<ButtonProps> = ({ setToggleButton }) => {
+  return (
+    <button
+      className="btn"
+      onClick={() => setToggleButton((prev) => !prev)} // 🔥 Fix: Toggle state correctly
+    >
+      Add Tasks
+    </button>
+  );
 };
 
 export default Button;

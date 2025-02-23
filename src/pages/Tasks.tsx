@@ -7,6 +7,7 @@ import Button from "../components/ui/UIButton";
 import { Slider } from "../components/ui/slider";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/sections/footer";
+import DialogForm from "../components/sections/DialogForm";
 type tasks = {
   id: number;
   title: string;
@@ -22,6 +23,8 @@ const Tasks: React.FC = () => {
     { id: 3, title: "Testing", progress: 50, section: "In Progress" },
     { id: 4, title: "Deployment", progress: 100, section: "Done" },
   ]);
+
+  const [toggleButton, setToggleButton] = useState<boolean>(false);
 
   const [tempValues, setTempValues] = useState<{ [key: number]: number }>({});
   // const previousCounts = useRef({} as string);
@@ -87,7 +90,7 @@ const Tasks: React.FC = () => {
         {/* Kanban Board Section */}
         <div className="flex justify-between items-center px-10 mt-5">
           <h2 className="text-2xl font-bold">Task Board</h2>
-          <Button />
+          <Button setToggleButton={setToggleButton} />
         </div>
 
         <section className="flex justify-center my-6 gap-6">
@@ -165,11 +168,11 @@ const Tasks: React.FC = () => {
             );
           })}
         </section>
-
-        <footer className="mt-20">
-          <Footer />
-        </footer>
       </div>
+      <footer className="mt-20">
+        <Footer />
+      </footer>
+      {toggleButton && <DialogForm />}
     </React.Fragment>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import {
   DialogContent,
@@ -9,9 +9,19 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/Input";
 import { Label } from "../ui/label";
+
 const DialogForm: React.FC = () => {
+  const [name, setName] = useState("Pedro Duarte");
+  const [username, setUsername] = useState("@peduarte");
+
+  const handleSave = (event: React.FormEvent) => {
+    event.preventDefault();
+    // Handle save logic here
+    console.log("Saved:", { name, username });
+  };
+
   return (
-    <div>
+    <form onSubmit={handleSave}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
@@ -24,20 +34,30 @@ const DialogForm: React.FC = () => {
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-3 w-[16vw]"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
               Username
             </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+            <Input
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="col-span-3 w-[16vw]"
+            />
           </div>
         </div>
         <DialogFooter>
           <Button type="submit">Save changes</Button>
         </DialogFooter>
       </DialogContent>
-    </div>
+    </form>
   );
 };
 

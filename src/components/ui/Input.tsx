@@ -15,11 +15,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     let mouseX = useMotionValue(0);
     let mouseY = useMotionValue(0);
 
-    function handleMouseMove({ currentTarget, clientX, clientY }: any) {
-      let { left, top } = currentTarget.getBoundingClientRect();
+    function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+      // let { left, top } = currentTarget.getBoundingClientRect();
 
-      mouseX.set(clientX - left);
-      mouseY.set(clientY - top);
+      // mouseX.set(clientX - left);
+      // mouseY.set(clientY - top);
+
+      const { currentTarget, clientX, clientY } = event;
+      const { left, top, width, height } =
+        currentTarget.getBoundingClientRect();
+
+      mouseX.set(((clientX - left) / width) * 100);
+      mouseY.set(((clientY - top) / height) * 100);
     }
     return (
       <motion.div

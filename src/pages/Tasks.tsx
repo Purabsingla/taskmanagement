@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../components/sections/NavBar";
 import { Separator } from "../components/ui/separator";
@@ -8,35 +8,62 @@ import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/sections/footer";
 import { Dialog, DialogTrigger } from "../components/ui/dialog";
 import DialogForm from "../components/sections/DialogForm";
-import ScrollProgress from "../components/ui/ScrollProgress";
 type tasks = {
   id: number;
   title: string;
   progress: number;
   section: "To-Do" | "In Progress" | "Done";
+  priority: "High" | "Medium" | "Low";
 };
 
 const Tasks: React.FC = () => {
   const { name } = useParams();
   const [Tasks, setTasks] = useState<tasks[]>([
-    { id: 1, title: "Project Completion", progress: 0, section: "To-Do" },
-    { id: 2, title: "Code Review", progress: 20, section: "To-Do" },
-    { id: 3, title: "Testing", progress: 50, section: "In Progress" },
-    { id: 4, title: "Deployment", progress: 100, section: "Done" },
+    {
+      id: 1,
+      title: "Project Completion",
+      progress: 0,
+      section: "To-Do",
+      priority: "High",
+    },
+    {
+      id: 2,
+      title: "Code Review",
+      progress: 20,
+      section: "To-Do",
+      priority: "Low",
+    },
+    {
+      id: 3,
+      title: "Testing",
+      progress: 50,
+      section: "In Progress",
+      priority: "Medium",
+    },
+    {
+      id: 4,
+      title: "Deployment",
+      progress: 100,
+      section: "Done",
+      priority: "Low",
+    },
   ]);
 
   const [tempValues, setTempValues] = useState<{ [key: number]: number }>({});
   // const previousCounts = useRef({} as string);
   const previousCounts = useRef<Record<string, number>>({});
 
-  const getTaskCount = (section: string) =>
-    Tasks.filter((task) => task.section === section).length;
+  const getTaskCount = useCallback(
+    (section: string) =>
+      Tasks.filter((task) => task.section === section).length,
+    [Tasks]
+  );
 
   useEffect(() => {
     ["To-Do", "In Progress", "Done"].forEach((title) => {
       previousCounts.current[title] = getTaskCount(title); // Update previous counts
     });
-  }, [Tasks]); // Runs whenever tasks update
+  }, [Tasks, getTaskCount]); // Runs whenever tasks update
 
   // Update progress while dragging
   const handleSliderChange = (id: number, value: number) => {
@@ -165,7 +192,17 @@ const Tasks: React.FC = () => {
                         <p>
                           Priority:{" "}
                           <span>
-                            <Badge variant="destructive">High</Badge>
+                            <Badge
+                              variant={
+                                task?.priority === "High"
+                                  ? "destructive"
+                                  : task?.priority === "Medium"
+                                  ? "warning"
+                                  : "success"
+                              }
+                            >
+                              {task.priority}
+                            </Badge>
                           </span>
                         </p>
                         {/* Slider */}

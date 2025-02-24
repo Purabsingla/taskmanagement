@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/sections/footer";
 import { Dialog, DialogTrigger } from "../components/ui/dialog";
 import DialogForm from "../components/sections/DialogForm";
+import ScrollProgress from "../components/ui/ScrollProgress";
 type tasks = {
   id: number;
   title: string;
@@ -110,7 +111,7 @@ const Tasks: React.FC = () => {
           </aside>
         </div>
 
-        <section className="flex justify-center my-6 gap-6">
+        <section className="flex justify-center my-5 gap-6">
           {["To-Do", "In Progress", "Done"].map((title, i) => {
             const currentCount = getTaskCount(title);
             const prevCount = previousCounts.current[title] ?? currentCount; // Use previous count or current if first render

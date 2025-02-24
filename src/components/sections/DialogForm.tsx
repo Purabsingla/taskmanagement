@@ -7,8 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { Input } from "../ui/Input";
+import { Input } from "../ui/Input2";
 import { Label } from "../ui/label";
+import { Textarea } from "../ui/TextArea";
 
 const DialogForm: React.FC = () => {
   const [name, setName] = useState("Pedro Duarte");
@@ -17,12 +18,13 @@ const DialogForm: React.FC = () => {
   const handleSave = (event: React.FormEvent) => {
     event.preventDefault();
     // Handle save logic here
+    console.log("Working...");
     console.log("Saved:", { name, username });
   };
 
   return (
     <form onSubmit={handleSave}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[650px] sm:max-h-auto">
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
@@ -38,7 +40,7 @@ const DialogForm: React.FC = () => {
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="col-span-3 w-[16vw]"
+              className="col-span-3"
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -49,12 +51,25 @@ const DialogForm: React.FC = () => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="col-span-3 w-[16vw]"
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              Description
+            </Label>
+            <Textarea
+              id="Description"
+              // value={username}
+              // onChange={(e) => setUsername(e.target.value)}
+              className="col-span-3"
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" variant={"outline"}>
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </form>

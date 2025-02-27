@@ -38,10 +38,10 @@ const KanbanBoardSelection: React.FC = () => {
         </svg>
       </div>
 
-      <h1 className="text-4xl font-extrabold text-white mb-8 drop-shadow-lg z-10">
+      <h1 className="text-6xl font-extrabold text-white mb-8 drop-shadow-lg z-10">
         Select Your Board to Manage
       </h1>
-      <div className="flex flex-wrap justify-center gap-10 w-full max-w-5xl min-h-[60vh] z-10">
+      <div className="flex flex-wrap my-auto justify-center gap-10 w-full max-w-6xl min-h-[60vh] z-10">
         {boards.slice(0, 5).map((board) => (
           <button
             key={board.id}

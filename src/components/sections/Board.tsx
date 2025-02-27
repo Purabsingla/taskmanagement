@@ -8,6 +8,7 @@ const initialBoards = [
   { id: uuidv4(), title: "Personal" },
   { id: uuidv4(), title: "Work Tasks" },
   { id: uuidv4(), title: "Hobby Projects" },
+  { id: uuidv4(), title: "Something" },
 ];
 
 const KanbanBoardSelection: React.FC = () => {
@@ -42,7 +43,7 @@ const KanbanBoardSelection: React.FC = () => {
         Select Your Board to Manage
       </h1>
       <div className="flex flex-wrap my-auto justify-center gap-10 w-full max-w-6xl min-h-[60vh] z-10">
-        {boards.slice(0, 5).map((board) => (
+        {boards.slice(0, 6).map((board) => (
           <button
             key={board.id}
             className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105"
@@ -51,11 +52,13 @@ const KanbanBoardSelection: React.FC = () => {
             📌 {board.title}
           </button>
         ))}
-        <button className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105">
-          ➕ Add New Board
-        </button>
+        {boards.length < 6 && (
+          <button className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105">
+            ➕ Add New Board
+          </button>
+        )}
       </div>
-      {boards.length > 6 && (
+      {boards.length > 5 && (
         <button className="mt-8 px-8 py-4 bg-white bg-opacity-20 backdrop-blur-lg text-white rounded-xl shadow-lg hover:bg-opacity-30 text-lg font-semibold transform hover:scale-105 transition-all z-10">
           Show More Boards
         </button>

@@ -52,7 +52,7 @@ const Tasks: React.FC = () => {
   const [tempValues, setTempValues] = useState<{ [key: number]: number }>({});
   // const previousCounts = useRef({} as string);
   const previousCounts = useRef<Record<string, number>>({});
-
+  const [open, setOpen] = useState<boolean>(false);
   const getTaskCount = useCallback(
     (section: string) =>
       Tasks.filter((task) => task.section === section).length,
@@ -91,14 +91,6 @@ const Tasks: React.FC = () => {
     );
   };
 
-  const handleDialogOpen = () => {
-    document.body.classList.add("dialog-open");
-  };
-
-  const handleDialogClose = () => {
-    document.body.classList.remove("dialog-open");
-  };
-
   return (
     <React.Fragment>
       <NavBar />
@@ -125,12 +117,8 @@ const Tasks: React.FC = () => {
         <div className="flex justify-between items-center px-10 mt-5">
           <h2 className="text-2xl font-bold">Task Board</h2>
           <aside>
-            <Dialog
-              onOpenChange={(isOpen) =>
-                isOpen ? handleDialogOpen() : handleDialogClose()
-              }
-            >
-              <DialogTrigger>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger onClick={() => setOpen(true)}>
                 <button className="btn">Add Tasks</button>
               </DialogTrigger>
               <DialogForm />

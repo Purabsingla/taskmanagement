@@ -1,23 +1,32 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { Dialog } from "../ui/dialog";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import DialogBoard from "./DialogFormBoard";
 
 const initialBoards = [
-  { id: uuidv4(), title: "College Work" },
-  { id: uuidv4(), title: "Home Work" },
-  { id: uuidv4(), title: "Personal" },
-  { id: uuidv4(), title: "Work Tasks" },
-  { id: uuidv4(), title: "Hobby Projects" },
-  { id: uuidv4(), title: "Something" },
+  { title: "College Work" },
+  { title: "Home Work" },
+  { title: "Personal" },
+  { title: "Work Tasks" },
+  { title: "Hobby Projects" },
 ];
 
 const KanbanBoardSelection: React.FC = () => {
   const [boards, setBoards] = useState(initialBoards);
-
+  const [open, setOpen] = useState<boolean>(false);
   const Navigate = useNavigate();
 
   const HandleNavigate = (Data: string) => {
-    Navigate(`/boards/${Data.split(" ").join("-")}`);
+    Navigate(`/boards/${Data?.split(" ").join("-")}`);
+  };
+
+  const HandleClick = (Name: string) => {
+    console.log("Clicked");
+    const Temp = boards;
+    boards.push({ title: Name });
+    setBoards(Temp);
+    setOpen(false);
   };
 
   return (
@@ -43,9 +52,9 @@ const KanbanBoardSelection: React.FC = () => {
         Select Your Board to Manage
       </h1>
       <div className="flex flex-wrap my-auto justify-center gap-10 w-full max-w-6xl min-h-[60vh] z-10">
-        {boards.slice(0, 6).map((board) => (
+        {boards.slice(0, 6).map((board, index) => (
           <button
-            key={board.id}
+            key={index}
             className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105"
             onClick={() => HandleNavigate(board.title)}
           >
@@ -53,9 +62,14 @@ const KanbanBoardSelection: React.FC = () => {
           </button>
         ))}
         {boards.length < 6 && (
-          <button className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105">
-            ➕ Add New Board
-          </button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger onClick={() => setOpen(true)}>
+              <button className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105">
+                ➕ Add New Board
+              </button>
+            </DialogTrigger>
+            <DialogBoard HandleClick={HandleClick} />
+          </Dialog>
         )}
       </div>
       {boards.length > 5 && (

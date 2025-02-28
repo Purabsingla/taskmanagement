@@ -75,7 +75,6 @@ const Tasks: React.FC = () => {
     );
   };
 
-  // Update section only when mouse is released
   const handleSliderRelease = (id: number) => {
     const value = tempValues[id] || 0; // Get the latest slider value
     setTasks((prevTasks) =>

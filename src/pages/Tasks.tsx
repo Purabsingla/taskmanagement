@@ -75,6 +75,7 @@ const Tasks: React.FC = () => {
     );
   };
 
+  //Handling Slider change
   const handleSliderRelease = (id: number) => {
     const value = tempValues[id] || 0; // Get the latest slider value
     setTasks((prevTasks) =>

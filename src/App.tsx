@@ -7,12 +7,14 @@ import Tasks from "./pages/Tasks";
 //Importing Css
 import "./css/Button.css";
 import "./css/style.css";
+import BoardsPage from "./components/sections/AllBoards";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/allboards" element={<BoardsPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/boards/:name" element={<Tasks />} />

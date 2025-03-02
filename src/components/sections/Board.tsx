@@ -21,6 +21,10 @@ const KanbanBoardSelection: React.FC = () => {
     Navigate(`/boards/${Data?.split(" ").join("-")}`);
   };
 
+  const HandleNavigateAllBoards = () => {
+    Navigate("allboards");
+  };
+
   const HandleClick = (Name: string) => {
     console.log("Clicked");
     const Temp = boards;
@@ -63,7 +67,11 @@ const KanbanBoardSelection: React.FC = () => {
         ))}
         {boards.length < 6 && (
           <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger onClick={() => setOpen(true)}>
+            <DialogTrigger
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
               <button className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105">
                 ➕ Add New Board
               </button>
@@ -73,7 +81,10 @@ const KanbanBoardSelection: React.FC = () => {
         )}
       </div>
       {boards.length > 5 && (
-        <button className="mt-8 px-8 py-4 bg-white bg-opacity-20 backdrop-blur-lg text-white rounded-xl shadow-lg hover:bg-opacity-30 text-lg font-semibold transform hover:scale-105 transition-all z-10">
+        <button
+          className="mt-8 px-8 py-4 bg-white bg-opacity-20 backdrop-blur-lg text-white rounded-xl shadow-lg hover:bg-opacity-30 text-lg font-semibold transform hover:scale-105 transition-all z-10"
+          onClick={HandleNavigateAllBoards}
+        >
           Show More Boards
         </button>
       )}

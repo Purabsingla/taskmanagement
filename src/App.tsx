@@ -8,6 +8,7 @@ import Tasks from "./pages/Tasks";
 import "./css/Button.css";
 import "./css/style.css";
 import BoardsPage from "./components/sections/AllBoards";
+import Details from "./pages/SignUpDetails";
 function App() {
   return (
     <div className="App">
@@ -17,6 +18,7 @@ function App() {
           <Route path="/allboards" element={<BoardsPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup/details" element={<Details />} />
           <Route path="/boards/:name" element={<Tasks />} />
         </Routes>
       </BrowserRouter>

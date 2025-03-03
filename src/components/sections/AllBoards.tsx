@@ -54,7 +54,7 @@ export default function BoardsPage() {
       <NavBar />
       <div className="flex h-screen bg-gray-50 mt-16">
         {/* Left Sidebar */}
-        <div className="w-1/5 p-8 border-r border-gray-200">
+        <div className="w-1/5 p-8 ">
           <h1 className="text-3xl font-extrabold text-gray-700 mb-6">
             My Boards
           </h1>
@@ -64,7 +64,7 @@ export default function BoardsPage() {
         </div>
 
         {/* Divider */}
-        <div className="w-1 border-l border-gray-200"></div>
+        <div className="w-1 h-60 mt-8 border-l border-gray-300"></div>
 
         {/* Right Main Content (Scrollable) */}
         <div className="w-4/5 p-8 overflow-y-auto">

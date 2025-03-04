@@ -49,6 +49,10 @@ const Tasks: React.FC = () => {
     },
   ]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [tempValues, setTempValues] = useState<{ [key: number]: number }>({});
   // const previousCounts = useRef({} as string);
   const previousCounts = useRef<Record<string, number>>({});

@@ -9,12 +9,14 @@ import "./css/Button.css";
 import "./css/style.css";
 import BoardsPage from "./components/sections/AllBoards";
 import Details from "./pages/SignUpDetails";
+import ContactUs from "./pages/ContactUs";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/contacts" element={<ContactUs />} />
           <Route path="/allboards" element={<BoardsPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />

@@ -38,13 +38,13 @@ const NavBar: React.FC = () => {
                 </li>
 
                 <li>
-                  <a
+                  <Link
+                    to={"/contacts"}
                     className="text-gray-500 transition hover:text-gray-500/75"
-                    href="#some"
                   >
                     {" "}
-                    Careers{" "}
-                  </a>
+                    Contact Us{" "}
+                  </Link>
                 </li>
 
                 <li>

@@ -12,7 +12,7 @@ const Vision: React.FC = () => {
     },
   };
   return (
-    <div className="mt-60">
+    <div className="mt-60 mx-auto">
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">

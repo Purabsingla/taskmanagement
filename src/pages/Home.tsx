@@ -6,6 +6,7 @@ import { FeaturesSectionDemo } from "../components/sections/Features";
 import TestimonialSlider from "../components/sections/Testimonials";
 import FrequentlyAskedQuestions from "../components/sections/FAQ";
 import Footer from "../components/sections/footer";
+import Vision from "../components/sections/Vision";
 
 const Home: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const Home: React.FC = () => {
       <NavBar />
       <Header />
       <KanbanBoardSelection />
+      <Vision />
       <div className="-z-50 ">
         <FeaturesSectionDemo />
       </div>

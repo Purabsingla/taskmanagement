@@ -19,7 +19,7 @@ const ScrollProgress: React.FC = () => {
 
   return (
     <motion.div
-      className="fixed left-0 h-1 bg-red-800"
+      className="fixed left-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600"
       style={{ width: `${scrollPercent}%` }}
       initial={{ width: 0 }}
       animate={{ width: `${scrollPercent}%` }}

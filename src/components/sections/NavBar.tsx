@@ -2,13 +2,34 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Separator } from "../ui/separator";
 import ScrollProgress from "../ui/ScrollProgress";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+
 const NavBar: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const navItems = [
+    { name: "About", href: "#about" },
+    { name: "Contact Us", href: "/contacts", isLink: true },
+    { name: "History", href: "#history" },
+    { name: "Services", href: "#services" },
+    { name: "Projects", href: "#projects" },
+    { name: "Blog", href: "#blog" },
+  ];
+
   return (
-    <header className="bg-white fixed top-0 start-0 w-full z-50">
+    <header className="bg-white/80 backdrop-blur-md fixed top-0 start-0 w-full z-50">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="md:flex md:items-center md:gap-12">
-            <a className="block text-teal-600" href="#homeishere">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="md:flex md:items-center md:gap-12"
+          >
+            <Link
+              to="/"
+              className="block text-indigo-600 transition-colors hover:text-indigo-500"
+            >
               <span className="sr-only">Home</span>
               <svg
                 className="h-8"
@@ -21,119 +42,134 @@ const NavBar: React.FC = () => {
                   fill="currentColor"
                 />
               </svg>
-            </a>
-          </div>
+            </Link>
+          </motion.div>
 
           <div className="hidden md:block">
-            <nav aria-label="Global">
-              <ul className="flex items-center gap-6 text-sm">
-                <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    href="#some"
+            <motion.nav
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              aria-label="Global"
+            >
+              <ul className="flex items-center gap-8 text-sm">
+                {navItems.map((item, index) => (
+                  <motion.li
+                    key={index}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    {" "}
-                    About{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <Link
-                    to={"/contacts"}
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                  >
-                    {" "}
-                    Contact Us{" "}
-                  </Link>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    href="#some"
-                  >
-                    {" "}
-                    History{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    href="#some"
-                  >
-                    {" "}
-                    Services{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    href="#some"
-                  >
-                    {" "}
-                    Projects{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    href="#some"
-                  >
-                    {" "}
-                    Blog{" "}
-                  </a>
-                </li>
+                    {item.isLink ? (
+                      <Link
+                        to={item.href}
+                        className="text-gray-600 transition-colors duration-300 hover:text-indigo-600"
+                      >
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        className="text-gray-600 transition-colors duration-300 hover:text-indigo-600"
+                      >
+                        {item.name}
+                      </a>
+                    )}
+                  </motion.li>
+                ))}
               </ul>
-            </nav>
+            </motion.nav>
           </div>
 
-          <div className="flex items-center gap-4">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-4"
+          >
             <div className="sm:flex sm:gap-4">
-              <Link
-                to="/login"
-                className="rounded-md bg-red-500 px-5 py-2.5 text-sm font-medium text-white shadow-sm 
-               transition-all duration-300 ease-in-out transform 
-               hover:bg-red-400 hover:scale-105 hover:shadow-md active:scale-95"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Login
-              </Link>
-
-              <div className="hidden sm:flex">
                 <Link
-                  to={"/signup"}
-                  className="rounded-md bg-transparent border border-red-500 px-5 py-2.5 text-sm font-medium text-red-500 
-                 transition-all duration-300 ease-in-out transform 
-                 hover:bg-red-500 hover:text-white hover:shadow-md active:scale-9"
+                  to="/login"
+                  className="rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-md 
+                  transition-all duration-300 ease-in-out hover:opacity-90"
+                >
+                  Login
+                </Link>
+              </motion.div>
+
+              <motion.div
+                className="hidden sm:block"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/signup"
+                  className="rounded-lg border-2 border-indigo-600 px-5 py-2.5 text-sm font-medium text-indigo-600 
+                  transition-all duration-300 ease-in-out hover:bg-indigo-600 hover:text-white"
                 >
                   Register
                 </Link>
-              </div>
+              </motion.div>
             </div>
 
             <div className="block md:hidden">
-              <button className="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="size-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </button>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="rounded-lg bg-gray-100 p-2 text-gray-600 transition-colors hover:text-indigo-600"
+              >
+                {isMenuOpen ? (
+                  <X className="size-5" />
+                ) : (
+                  <Menu className="size-5" />
+                )}
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{
+          opacity: isMenuOpen ? 1 : 0,
+          height: isMenuOpen ? "auto" : 0,
+        }}
+        className="md:hidden overflow-hidden bg-white"
+      >
+        <nav className="p-4">
+          <ul className="space-y-2">
+            {navItems.map((item, index) => (
+              <motion.li
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                {item.isLink ? (
+                  <Link
+                    to={item.href}
+                    className="block text-gray-600 py-2 transition-colors duration-300 hover:text-indigo-600"
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <a
+                    href={item.href}
+                    className="block text-gray-600 py-2 transition-colors duration-300 hover:text-indigo-600"
+                  >
+                    {item.name}
+                  </a>
+                )}
+              </motion.li>
+            ))}
+          </ul>
+        </nav>
+      </motion.div>
+
       <ScrollProgress />
       <Separator />
     </header>

@@ -1,117 +1,180 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Dialog } from "../ui/dialog";
-import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Plus, Layout, ChevronRight } from "lucide-react";
+import { Dialog, DialogTrigger } from "../ui/dialog";
 import DialogBoard from "./DialogFormBoard";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const initialBoards = [
-  { title: "College Work" },
-  { title: "Home Work" },
-  { title: "Personal" },
-  { title: "Work Tasks" },
-  { title: "Hobby Projects" },
+  { title: "College Work", icon: "📚" },
+  { title: "Home Work", icon: "🏠" },
+  { title: "Personal", icon: "💭" },
+  { title: "Work Tasks", icon: "💼" },
+  { title: "Hobby Projects", icon: "🎨" },
 ];
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+    },
+  },
+};
 
 const KanbanBoardSelection: React.FC = () => {
   const [boards, setBoards] = useState(initialBoards);
   const [open, setOpen] = useState<boolean>(false);
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const HandleNavigate = (Data: string) => {
-    Navigate(`/boards/${Data?.split(" ").join("-")}`);
+  const handleNavigate = (data: string) => {
+    navigate(`/boards/${data?.split(" ").join("-")}`);
   };
 
-  const HandleNavigateAllBoards = () => {
-    Navigate("allboards");
+  const handleNavigateAllBoards = () => {
+    navigate("allboards");
   };
 
-  const HandleClick = (Name: string) => {
-    console.log("Clicked");
-    const Temp = boards;
-    boards.push({ title: Name });
-    setBoards(Temp);
+  const handleClick = (name: string) => {
+    setBoards([...boards, { title: name, icon: "📌" }]);
     setOpen(false);
   };
 
   return (
-    <div className="mt-48 relative flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-red-500 to-red-400 z-30">
-      {/* Top SVG */}
-      <div className="absolute -top-[21rem] left-0 w-full">
-        <svg viewBox="0 0 1440 320" className="w-full">
-          <defs>
-            <linearGradient id="svgGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ef4444" />
-              <stop offset="100%" stopColor="#f87171" />
-            </linearGradient>
-          </defs>
-          <path
-            fill="url(#svgGradient)"
-            fillOpacity="1"
-            d="M0,128L48,128C96,128,192,128,288,144C384,160,480,192,576,197.3C672,203,768,181,864,170.7C960,160,1056,160,1152,170.7C1248,181,1344,203,1392,213.3L1440,224L1440,320L0,320Z"
-          ></path>
-        </svg>
-      </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <motion.div
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 mb-4">
+            Your Workspace
+          </h1>
+          <p className="text-gray-600 text-lg">
+            Select a board to start organizing your tasks
+          </p>
+        </motion.div>
 
-      <h1 className="text-6xl font-extrabold text-white mb-8 drop-shadow-lg z-10">
-        Select Your Board to Manage
-      </h1>
-      <div className="flex flex-wrap my-auto justify-center gap-10 w-full max-w-6xl min-h-[60vh] z-10">
-        {boards.slice(0, 6).map((board, index) => (
-          <button
-            key={index}
-            className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105"
-            onClick={() => HandleNavigate(board.title)}
-          >
-            📌 {board.title}
-          </button>
-        ))}
-        {boards.length < 6 && (
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger
-              onClick={() => {
-                setOpen(true);
-              }}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {boards.slice(0, 6).map((board, index) => (
+            <motion.div
+              key={index}
+              variants={item}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => handleNavigate(board.title)}
+              className="group cursor-pointer"
             >
-              <button className="w-80 h-48 flex items-center justify-center bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl hover:bg-opacity-30 transition-all text-2xl font-semibold text-white border border-white border-opacity-40 transform hover:scale-105">
-                ➕ Add New Board
-              </button>
-            </DialogTrigger>
-            <DialogBoard HandleClick={HandleClick} />
-          </Dialog>
+              <div className="relative bg-white rounded-2xl p-6 shadow-lg transition-all duration-500 ease-out border border-gray-100 hover:shadow-2xl hover:border-indigo-100 hover:bg-gradient-to-br hover:from-white hover:to-indigo-50">
+                <div className="flex items-center justify-between mb-4">
+                  <motion.span
+                    initial={{ scale: 1 }}
+                    whileHover={{ scale: 1.2, rotate: 10 }}
+                    className="text-3xl transform transition-transform duration-300 group-hover:scale-110"
+                  >
+                    {board.icon}
+                  </motion.span>
+                  <motion.div
+                    initial={{ x: 0 }}
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  >
+                    <ChevronRight className="w-5 h-5 text-indigo-600" />
+                  </motion.div>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 group-hover:text-indigo-700 transition-colors duration-300">
+                  {board.title}
+                </h3>
+                <div className="mt-2 flex items-center space-x-2 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  <Layout className="w-4 h-4 text-indigo-600" />
+                  <span className="text-sm text-indigo-600 font-medium">
+                    View Board
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+
+          {boards.length < 6 && (
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger onClick={() => setOpen(true)}>
+                <motion.div
+                  variants={item}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group cursor-pointer"
+                >
+                  <div className="relative bg-white rounded-2xl p-6 shadow-lg transition-all duration-500 ease-out border border-dashed border-gray-300 hover:shadow-2xl hover:border-indigo-200 hover:bg-gradient-to-br hover:from-white hover:to-indigo-50 flex flex-col items-center justify-center min-h-[200px]">
+                    <motion.div
+                      whileHover={{ rotate: 90 }}
+                      transition={{ type: "spring", stiffness: 200 }}
+                      className="mb-3"
+                    >
+                      <Plus className="w-12 h-12 text-gray-400 group-hover:text-indigo-600 transition-colors duration-300" />
+                    </motion.div>
+                    <p className="text-gray-600 font-medium group-hover:text-indigo-700 transition-colors duration-300">
+                      Create New Board
+                    </p>
+                  </div>
+                </motion.div>
+              </DialogTrigger>
+              <DialogBoard HandleClick={handleClick} />
+            </Dialog>
+          )}
+        </motion.div>
+
+        {boards.length > 5 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="text-center mt-12"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleNavigateAllBoards}
+              className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 font-medium rounded-lg shadow-lg hover:shadow-xl border border-indigo-100 hover:bg-indigo-50 transition-all duration-300"
+            >
+              View All Boards
+              <motion.div
+                initial={{ x: 0 }}
+                whileHover={{ x: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <ChevronRight className="w-5 h-5 ml-2" />
+              </motion.div>
+            </motion.button>
+          </motion.div>
         )}
       </div>
-      {boards.length > 5 && (
-        <button
-          className="mt-8 px-8 py-4 bg-white bg-opacity-20 backdrop-blur-lg text-white rounded-xl shadow-lg hover:bg-opacity-30 text-lg font-semibold transform hover:scale-105 transition-all z-10"
-          onClick={HandleNavigateAllBoards}
-        >
-          Show More Boards
-        </button>
-      )}
-
-      {/* Bottom SVG (Reversed) */}
-      <div className="absolute -bottom-[21rem] left-0 w-full transform rotate-180">
-        <svg viewBox="0 0 1440 320" className="w-full">
-          <defs>
-            <linearGradient
-              id="svgGradientReversed"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="0%"
-            >
-              <stop offset="0%" stopColor="#f87171" />
-              <stop offset="100%" stopColor="#ef4444" />
-            </linearGradient>
-          </defs>
-          <path
-            fill="url(#svgGradientReversed)"
-            fillOpacity="1"
-            d="M0,128L48,128C96,128,192,128,288,144C384,160,480,192,576,197.3C672,203,768,181,864,170.7C960,160,1056,160,1152,170.7C1248,181,1344,203,1392,213.3L1440,224L1440,320L0,320Z"
-          ></path>
-        </svg>
-      </div>
-    </div>
+    </motion.div>
   );
 };
 

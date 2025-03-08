@@ -1,165 +1,95 @@
-import React from "react";
-import { cn } from "../../lib/utils";
-import { useEffect, useRef } from "react";
-import Lottie from "lottie-react";
-import { LottieRefCurrentProps } from "lottie-react";
-import DragDrop from "../../assests/LottieAnimations/Animation - 1739627337646.json";
-import Collab from "../../assests/LottieAnimations/Collaboration.json";
-import Date from "../../assests/LottieAnimations/DueDate.json";
-import Dark from "../../assests/LottieAnimations/DarkMode.json";
+// import React from "react";
+// import { cn } from "../../lib/utils";
+import { motion } from "framer-motion";
+import { Boxes, Calendar, Users2, Moon } from "lucide-react";
 
-export function FeaturesSectionDemo() {
-  const lottieRef = useRef<LottieRefCurrentProps | null>(null);
+type LucideIcon = React.FC<React.SVGProps<SVGSVGElement>>;
+interface Feature {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
 
-  useEffect(() => {
-    if (lottieRef.current) {
-      lottieRef.current.play(); // Start animation
-    }
-  }, []);
+const features: Feature[] = [
+  {
+    title: "Drag & Drop Task Management",
+    description:
+      "Intuitive task management with drag and drop functionality. Move tasks between different stages effortlessly.",
+    icon: Boxes,
+  },
+  {
+    title: "Task Due Date & Reminders",
+    description:
+      "Never miss a deadline with smart due date tracking and timely reminders for your tasks.",
+    icon: Calendar,
+  },
+  {
+    title: "Collaboration & User Roles",
+    description:
+      "Work together seamlessly with role-based access control and real-time collaboration features.",
+    icon: Users2,
+  },
+  {
+    title: "Dark Mode & Custom Themes",
+    description:
+      "Personalize your experience with dark mode and customizable themes for optimal viewing comfort.",
+    icon: Moon,
+  },
+];
 
-  const features = [
-    {
-      title: "Drag & Drop Task Management",
-      description:
-        "Allows users to drag and drop tasks between different columns (e.g., To-Do, In Progress, Done). This enhances workflow by making task updates quick and intuitive.",
-      skeleton: <SkeletonOne />,
-      className: "col-span-1 lg:col-span-4 border-b lg:border-r border-black",
-    },
-    {
-      title: "Task Due Date & Reminders",
-      description:
-        "Displays a due date for each task and sends reminders when deadlines are close or missed. Helps users stay on track with their work.",
-      skeleton: <SkeletonTwo />,
-      className: "border-b col-span-1 lg:col-span-2 border-black",
-    },
-    {
-      title: "Collaboration & User Roles",
-      description:
-        "Enables team collaboration, where users can assign tasks, track changes, and comment on tasks in real-time. Helps teams work together seamlessly.",
-      skeleton: <SkeletonThree />,
-      className: "col-span-1 lg:col-span-3 lg:border-r  border-black",
-    },
-    {
-      title: "Dark Mode & Custom Themes ",
-      description:
-        "Allows users to switch between light and dark mode for a personalized experience. Helps with eye comfort and custom branding.",
-      skeleton: <SkeletonFour />,
-      className:
-        "col-span-1 lg:col-span-3 border-b lg:border-none border-black",
-    },
-  ];
+export function FeaturesSection() {
   return (
-    <div className="relative z-20 py-10 lg:py-20 max-w-7xl mx-auto ">
-      <div className="px-8">
-        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-red-600 ">
-          Packed with thousands of features
-        </h4>
+    <section className="relative z-20 py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-20">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+          >
+            Powerful Features
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-lg text-gray-600 max-w-3xl mx-auto"
+          >
+            Everything you need to manage your tasks effectively and collaborate
+            with your team seamlessly.
+          </motion.p>
+        </div>
 
-        <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-gray-800 text-center font-normal ">
-          From Image generation to video generation, Everything AI has APIs for
-          literally everything. It can even create this website copy for you.
-        </p>
-      </div>
-
-      <div className="relative ">
-        <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border rounded-md border-black">
-          {features.map((feature) => (
-            <FeatureCard key={feature.title} className={feature.className}>
-              <FeatureTitle>{feature.title}</FeatureTitle>
-              <FeatureDescription>{feature.description}</FeatureDescription>
-              <div className=" h-full w-full">{feature.skeleton}</div>
-            </FeatureCard>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+          {features.map((feature, index) => (
+            <FeatureCard key={feature.title} feature={feature} index={index} />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-const FeatureCard = ({
-  children,
-  className,
-}: {
-  children?: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <div className={cn(`p-4 sm:p-8 relative overflow-hidden`, className)}>
-      {children}
-    </div>
-  );
-};
+function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
+  const Icon = feature.icon;
 
-const FeatureTitle = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <p className=" max-w-5xl mx-auto text-left tracking-tight text-black  text-xl md:text-2xl md:leading-snug">
-      {children}
-    </p>
-  );
-};
-
-const FeatureDescription = ({ children }: { children?: React.ReactNode }) => {
-  return (
-    <p
-      className={cn(
-        "text-sm md:text-base  max-w-4xl text-left mx-auto",
-        " text-center font-normal text-black",
-        "text-left max-w-sm mx-0 md:text-sm my-2"
-      )}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      className="relative group"
     >
-      {children}
-    </p>
-  );
-};
-
-export const SkeletonOne = () => {
-  return (
-    <div className="relative flex py-8 px-2 gap-10 h-full">
-      <div className="w-[80%] p-5 mx-auto bg-white   h-[80%]">
-        <div className="flex flex-1 w-full h-full flex-col space-y-2  ">
-          {/* TODO */}
-
-          <Lottie animationData={DragDrop} loop={true} />
+      <div className="relative p-8 bg-white border border-gray-200 rounded-2xl transition-all duration-300 hover:shadow-xl">
+        <div className="flex items-center justify-center w-12 h-12 mb-6 bg-indigo-100 rounded-xl group-hover:bg-indigo-500 transition-colors duration-300">
+          <Icon className="w-6 h-6 text-indigo-600 group-hover:text-white transition-colors duration-300" />
         </div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-3">
+          {feature.title}
+        </h3>
+        <p className="text-gray-600">{feature.description}</p>
       </div>
-    </div>
+    </motion.div>
   );
-};
-
-export const SkeletonThree = () => {
-  return (
-    <a
-      href="https://www.youtube.com/watch?v=RPa3_AD1_Vs"
-      target="__blank"
-      className="relative flex gap-10  h-full group/image"
-    >
-      <div className="w-[70%]  mx-auto bg-transparent dark:bg-transparent group h-[70%]">
-        <div className="flex flex-1 w-full h-full flex-col space-y-2  relative">
-          {/* TODO */}
-
-          <Lottie animationData={Collab} loop={true} />
-        </div>
-      </div>
-    </a>
-  );
-};
-
-export const SkeletonTwo = () => {
-  return (
-    <div className="relative flex flex-col items-start p-8 gap-10 h-full overflow-hidden">
-      {/* TODO */}
-      <div className="flex flex-row mx-auto">
-        <Lottie animationData={Date} loop={true} />
-      </div>
-    </div>
-  );
-};
-
-export const SkeletonFour = () => {
-  return (
-    <div className="h-60 md:h-60  flex flex-col items-center relative bg-transparent dark:bg-transparent mt-10">
-      {/* <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" /> */}
-      <Lottie animationData={Dark} loop={true} />
-    </div>
-  );
-};
+}

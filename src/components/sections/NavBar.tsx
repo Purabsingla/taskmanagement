@@ -24,6 +24,7 @@ const NavBar: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
             className="md:flex md:items-center md:gap-12"
           >
             <Link
@@ -49,7 +50,7 @@ const NavBar: React.FC = () => {
             <motion.nav
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.7 }}
               aria-label="Global"
             >
               <ul className="flex items-center gap-8 text-sm">
@@ -83,6 +84,7 @@ const NavBar: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
             className="flex items-center gap-4"
           >
             <div className="sm:flex sm:gap-4">

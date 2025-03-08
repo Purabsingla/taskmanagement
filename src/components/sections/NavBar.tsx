@@ -18,7 +18,7 @@ const NavBar: React.FC = () => {
   ];
 
   return (
-    <header className="bg-white/80 backdrop-blur-md fixed top-0 start-0 w-full z-50">
+    <header className="bg-white/80 backdrop-blur-md fixed top-0 start-0 w-full z-[60]">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <motion.div

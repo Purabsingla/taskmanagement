@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import NavBar from "../components/sections/NavBar";
 import Header from "../components/HeaderMain";
 import KanbanBoardSelection from "../components/sections/Board";
@@ -8,17 +8,18 @@ import FrequentlyAskedQuestions from "../components/sections/FAQ";
 import Footer from "../components/sections/footer";
 import Vision from "../components/sections/Vision";
 import CTA from "../components/sections/FinalCTA";
+import { useInView } from "framer-motion";
 
 const Home: React.FC = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
   return (
     <React.Fragment>
       <NavBar />
       <Header />
-      <KanbanBoardSelection />
+      <div ref={ref}>{isInView && <KanbanBoardSelection />}</div>
       <Vision />
-      <div className="-z-50 ">
-        <FeaturesSection />
-      </div>
+      <FeaturesSection />
       <TestimonialSlider />
       <FrequentlyAskedQuestions />
       <CTA />

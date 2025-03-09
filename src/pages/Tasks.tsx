@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import NavBar from "../components/sections/NavBar";
-import { Separator } from "../components/ui/separator";
+// import { Separator } from "../components/ui/separator";
+import { motion } from "framer-motion";
 import { Badge } from "../components/ui/badge";
 import { Slider } from "../components/ui/slider";
-import { motion, AnimatePresence } from "framer-motion";
-import Footer from "../components/sections/footer";
 import { Dialog, DialogTrigger } from "../components/ui/dialog";
+import { PlusCircle, Search, Settings, Layout } from "lucide-react";
 import DialogForm from "../components/sections/DialogForm";
-type tasks = {
+import Footer from "../components/sections/footer";
+
+type Task = {
   id: number;
   title: string;
   progress: number;
@@ -18,7 +19,7 @@ type tasks = {
 
 const Tasks: React.FC = () => {
   const { name } = useParams();
-  const [Tasks, setTasks] = useState<tasks[]>([
+  const [tasks, setTasks] = useState<Task[]>([
     {
       id: 1,
       title: "Project Completion",
@@ -54,22 +55,21 @@ const Tasks: React.FC = () => {
   }, []);
 
   const [tempValues, setTempValues] = useState<{ [key: number]: number }>({});
-  // const previousCounts = useRef({} as string);
   const previousCounts = useRef<Record<string, number>>({});
   const [open, setOpen] = useState<boolean>(false);
+
   const getTaskCount = useCallback(
     (section: string) =>
-      Tasks.filter((task) => task.section === section).length,
-    [Tasks]
+      tasks.filter((task) => task.section === section).length,
+    [tasks]
   );
 
   useEffect(() => {
     ["To-Do", "In Progress", "Done"].forEach((title) => {
-      previousCounts.current[title] = getTaskCount(title); // Update previous counts
+      previousCounts.current[title] = getTaskCount(title);
     });
-  }, [Tasks, getTaskCount]); // Runs whenever tasks update
+  }, [tasks, getTaskCount]);
 
-  // Update progress while dragging
   const handleSliderChange = (id: number, value: number) => {
     setTempValues((prev) => ({ ...prev, [id]: value }));
     setTasks((prevTasks) =>
@@ -79,9 +79,8 @@ const Tasks: React.FC = () => {
     );
   };
 
-  //Handling Slider change
   const handleSliderRelease = (id: number) => {
-    const value = tempValues[id] || 0; // Get the latest slider value
+    const value = tempValues[id] || 0;
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.id === id
@@ -96,130 +95,114 @@ const Tasks: React.FC = () => {
   };
 
   return (
-    <React.Fragment>
-      <NavBar />
-      <div className="flex flex-col mt-16">
-        {/* Header */}
-        <header className="w-full flex p-8 items-center">
-          <div className="w-1/2 font-extrabold text-4xl pl-6">
-            <p>Board: {name?.split("-").join(" ")}</p>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 mt-16">
+      <div className="max-w-[1400px] mx-auto px-4 py-8">
+        <header className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <Layout className="w-8 h-8 text-blue-600" />
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+              {name?.split("-").join(" ")}
+            </h1>
           </div>
-          <div className="w-1/2 flex justify-end pr-10 gap-6">
-            <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md">
-              Search
+          <div className="flex items-center gap-4">
+            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200">
+              <Search className="w-4 h-4" />
+              <span>Search</span>
             </button>
-            <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md">
-              Settings
+            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200">
+              <Settings className="w-4 h-4" />
+              <span>Settings</span>
             </button>
           </div>
         </header>
 
-        {/* Separator */}
-        <Separator className="my-3 px-10" />
-
-        {/* Kanban Board Section */}
-        <div className="flex justify-between items-center px-10 mt-5">
-          <h2 className="text-2xl font-bold">Task Board</h2>
-          <aside>
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger onClick={() => setOpen(true)}>
-                <button className="btn">Add Tasks</button>
-              </DialogTrigger>
-              <DialogForm />
-            </Dialog>
-          </aside>
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200">
+            Task Board
+          </h2>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md">
+                <PlusCircle className="w-5 h-5" />
+                <span>Add Task</span>
+              </button>
+            </DialogTrigger>
+            <DialogForm />
+          </Dialog>
         </div>
 
-        <section className="flex justify-center my-5 gap-6">
-          {["To-Do", "In Progress", "Done"].map((title, i) => {
-            const currentCount = getTaskCount(title);
-            const prevCount = previousCounts.current[title] ?? currentCount; // Use previous count or current if first render
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {["To-Do", "In Progress", "Done"].map((title, i) => (
+            <div key={i} className="flex flex-col h-full">
+              <div
+                className={`rounded-t-xl p-4 ${
+                  i === 0
+                    ? "bg-gradient-to-r from-rose-500 to-pink-500"
+                    : i === 1
+                    ? "bg-gradient-to-r from-amber-500 to-orange-500"
+                    : "bg-gradient-to-r from-emerald-500 to-green-500"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-white">{title}</h3>
+                  <span className="px-2.5 py-0.5 bg-white/20 rounded-full text-sm text-white">
+                    {getTaskCount(title)}
+                  </span>
+                </div>
+              </div>
 
-            return (
-              <div key={i} className="mx-5 flex flex-col items-center">
-                {/* Column Header */}
-                <AnimatePresence>
-                  <h1
-                    className={`border rounded-t-xl w-[24rem] p-4 text-xl font-bold text-start border-b-0 text-white shadow-md ${
-                      i === 0
-                        ? "bg-gradient-to-r from-red-600 to-red-400"
-                        : i === 1
-                        ? "bg-gradient-to-r from-yellow-500 to-yellow-300"
-                        : "bg-gradient-to-r from-green-600 to-green-400"
-                    }`}
-                  >
-                    {title} Tasks (
-                    <span className="relative inline-block w-6 h-6 overflow-hidden">
-                      <AnimatePresence mode="popLayout">
-                        <motion.span
-                          key={getTaskCount(title)}
-                          initial={{ y: 10, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          exit={{
-                            y: getTaskCount(title) > prevCount ? -10 : 10,
-                            opacity: 0,
-                          }}
-                          transition={{ duration: 0.3 }}
-                          className="absolute w-full text-center"
-                        >
-                          {getTaskCount(title)}
-                        </motion.span>
-                      </AnimatePresence>
-                    </span>
-                    )
-                  </h1>
-                </AnimatePresence>
-
-                {/* Task Cards */}
-                <div className="w-[26rem] p-4 min-h-[16rem] rounded-b-lg space-y-3">
-                  {Tasks.filter((task) => task.section === title).map(
-                    (task) => (
-                      <div
+              <div className="flex-1 bg-white dark:bg-gray-800 rounded-b-xl p-4 shadow-sm">
+                <div className="space-y-4">
+                  {tasks
+                    .filter((task) => task.section === title)
+                    .map((task) => (
+                      <motion.div
                         key={task.id}
-                        className="group bg-white p-3 rounded-lg hover:shadow-xl flex flex-col items-start gap-5 py-4 justify-start border transition transform hover:-translate-y-2"
+                        layout
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="group bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl hover:shadow-lg transition-all duration-200 border border-gray-100 dark:border-gray-600"
                       >
-                        <h1 className="text-lg font-medium group-hover:text-red-500 transition-colors">
+                        <h4 className="text-lg font-medium mb-3 group-hover:text-blue-600 dark:text-gray-100">
                           {task.title}
-                        </h1>
-                        <p>
-                          Priority:{" "}
-                          <span>
-                            <Badge
-                              variant={
-                                task?.priority === "High"
-                                  ? "destructive"
-                                  : task?.priority === "Medium"
-                                  ? "warning"
-                                  : "success"
-                              }
-                            >
-                              {task.priority}
-                            </Badge>
+                        </h4>
+                        <div className="flex items-center justify-between mb-4">
+                          <Badge
+                            variant={
+                              task.priority === "High"
+                                ? "destructive"
+                                : task.priority === "Medium"
+                                ? "secondary"
+                                : "default"
+                            }
+                            className="text-xs"
+                          >
+                            {task.priority}
+                          </Badge>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {task.progress}%
                           </span>
-                        </p>
-                        {/* Slider */}
+                        </div>
                         <Slider
                           value={[task.progress]}
                           onValueChange={(value) =>
                             handleSliderChange(task.id, value[0])
                           }
-                          onPointerUp={() => handleSliderRelease(task.id)} // Mouse release event
+                          onPointerUp={() => handleSliderRelease(task.id)}
                           className="w-full"
-                          // thumbClass="bg-blue-500" // Change slider color
                         />
-                      </div>
-                    )
-                  )}
+                      </motion.div>
+                    ))}
                 </div>
               </div>
-            );
-          })}
-        </section>
+            </div>
+          ))}
+        </div>
       </div>
-      <footer className="mt-20">
-        <Footer />
-      </footer>
-    </React.Fragment>
+      <Footer />
+    </div>
   );
 };
 

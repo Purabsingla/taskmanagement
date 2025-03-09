@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import NavBar from "../components/sections/NavBar";
 import Header from "../components/HeaderMain";
 import KanbanBoardSelection from "../components/sections/Board";
 import { FeaturesSection } from "../components/sections/Features";
@@ -15,7 +14,6 @@ const Home: React.FC = () => {
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   return (
     <React.Fragment>
-      <NavBar />
       <Header />
       <div ref={ref}>{isInView && <KanbanBoardSelection />}</div>
       <Vision />

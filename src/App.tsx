@@ -10,10 +10,12 @@ import "./css/style.css";
 import BoardsPage from "./components/sections/AllBoards";
 import Details from "./pages/SignUpDetails";
 import ContactUs from "./pages/ContactUs";
+import NavBar from "./components/sections/NavBar";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contacts" element={<ContactUs />} />

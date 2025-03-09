@@ -49,8 +49,8 @@ const KanbanBoardSelection: React.FC = () => {
     navigate("allboards");
   };
 
-  const handleClick = (name: string) => {
-    setBoards([...boards, { title: name, icon: "📌" }]);
+  const handleClick = (name: string, emoji: string) => {
+    setBoards([...boards, { title: name, icon: emoji }]);
     setOpen(false);
   };
 

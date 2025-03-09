@@ -10,3 +10,25 @@ body {
 html {
   overflow-y: auto;
 }
+
+/* ✅ Force Scrollbar ONLY for the Emoji Picker */
+.emoji-picker-react {
+  max-height: 400px !important;
+  overflow-y: scroll !important; /* Force vertical scrolling */
+  scrollbar-width: thin !important; /* Show scrollbar in Firefox */
+}
+
+/* ✅ Re-enable WebKit scrollbar inside emoji picker */
+.emoji-picker-react::-webkit-scrollbar {
+  display: block !important;
+  width: 6px;
+}
+
+.emoji-picker-react::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar color */
+  border-radius: 6px;
+}
+
+.emoji-picker-react::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}

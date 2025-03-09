@@ -50,6 +50,32 @@ const DialogBoard: React.FC<DialogBoardProps> = ({ HandleClick }) => {
         <form onSubmit={handleSubmit} className="mt-6 space-y-6">
           <div className="space-y-2">
             <div className="flex items-center gap-4">
+              {/* <Popover
+                open={isEmojiPickerOpen}
+                onOpenChange={setIsEmojiPickerOpen}
+              >
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="text-2xl h-14 w-14 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-colors duration-300"
+                  >
+                    {selectedEmoji || <Smile className="h-6 w-6" />}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  side="bottom"
+                  align="center"
+                  className="w-full border-none shadow-xl "
+                >
+                  <EmojiPicker
+                    onEmojiClick={(emojiData) => {
+                      setSelectedEmoji(emojiData.emoji);
+                      setIsEmojiPickerOpen(false);
+                    }}
+                    height={400}
+                  />
+                </PopoverContent>
+              </Popover> */}
               <Popover
                 open={isEmojiPickerOpen}
                 onOpenChange={setIsEmojiPickerOpen}
@@ -62,16 +88,24 @@ const DialogBoard: React.FC<DialogBoardProps> = ({ HandleClick }) => {
                     {selectedEmoji || <Smile className="h-6 w-6" />}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-full p-0 border-none shadow-xl">
-                  <EmojiPicker
-                    onEmojiClick={(emojiData) => {
-                      setSelectedEmoji(emojiData.emoji);
-                      setIsEmojiPickerOpen(false);
-                    }}
-                    width="100%"
-                    height={400}
-                  />
-                </PopoverContent>
+
+                {/* Popover Content Appears Below */}
+                <div className="relative">
+                  <PopoverContent
+                    side="left"
+                    align="start"
+                    sideOffset={15}
+                    className="w-full p-0 mb-10 border-none shadow-xl"
+                  >
+                    <EmojiPicker
+                      onEmojiClick={(emojiData) => {
+                        setSelectedEmoji(emojiData.emoji);
+                        setIsEmojiPickerOpen(false);
+                      }}
+                      height={400}
+                    />
+                  </PopoverContent>
+                </div>
               </Popover>
 
               <div className="flex-1 space-y-2">

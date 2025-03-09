@@ -96,8 +96,10 @@ const DialogBoard: React.FC<DialogBoardProps> = ({ HandleClick }) => {
                     align="start"
                     sideOffset={15}
                     className="w-full p-0 mb-10 border-none shadow-xl"
+                    onWheel={(e) => e.stopPropagation()} // Stop scroll event from propagating
                   >
                     <EmojiPicker
+                      className="emojiPicker"
                       onEmojiClick={(emojiData) => {
                         setSelectedEmoji(emojiData.emoji);
                         setIsEmojiPickerOpen(false);

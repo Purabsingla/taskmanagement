@@ -4,7 +4,7 @@ import { Separator } from "../ui/separator";
 import ScrollProgress from "../ui/ScrollProgress";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-
+import { User, Settings, LogOut } from "lucide-react";
 const NavBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
@@ -115,6 +115,36 @@ const NavBar: React.FC = () => {
                 </Link>
               </motion.div>
             </div>
+            {/* <div className="relative group">
+              <button className="flex items-center">
+                <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
+                  <User className="h-5 w-5 text-gray-500" />
+                </div>
+              </button>
+
+              <div className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out">
+                <div className="px-4 py-3 border-b">
+                  <p className="text-sm font-medium text-gray-900">John Doe</p>
+                  <p className="text-sm text-gray-500">john@example.com</p>
+                </div>
+
+                <a
+                  href="#some"
+                  className=" px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                >
+                  <Settings className="h-4 w-4 mr-2" />
+                  Settings
+                </a>
+
+                <a
+                  href="#some"
+                  className=" px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign out
+                </a>
+              </div>
+            </div> */}
 
             <div className="block md:hidden">
               <motion.button

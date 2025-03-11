@@ -4,7 +4,7 @@ import { Separator } from "../ui/separator";
 import ScrollProgress from "../ui/ScrollProgress";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { User, Settings, LogOut } from "lucide-react";
+// import { User, Settings, LogOut } from "lucide-react";
 const NavBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
